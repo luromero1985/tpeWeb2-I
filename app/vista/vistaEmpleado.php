@@ -36,7 +36,14 @@ class vistaEmpleado
         $this->smarty->display('templates/formularioEdicionEmpleado.tpl');
     }
 
+    function mostrarDetalleEmpleado($empleado, $categorias)
+    {
+        $this->smarty->assign('empleado', $empleado);
+        $this->smarty->assign('categorias', $categorias);
 
+        $this->smarty->display('templates/detalleEmpleado.tpl');
+    }
+    
 
     function formularioCargaEmpleado($empleado, $categorias, $completar = NULL)
     {

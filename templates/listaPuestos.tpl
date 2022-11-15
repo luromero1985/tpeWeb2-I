@@ -33,71 +33,73 @@
         </form>
 
     </div>
+    {if isset($smarty.session.logueado)}
 
+        <div class="ms-5">
 
-    <div class="ms-5">
-        <h3>Carga de funciones</h3>
+            <h3>Carga de funciones</h3>
 
-        <!--formulario de ingreso de categorias-->
-        <form action='agregarPuesto' method='POST'>
-            <div class="mb-3">
-                <label>Categoria</label>
-                <input type="text" class="form-control" name="puesto" required>
-            </div>
-            <div class="mb-3">
-                <label>Descripcion</label>
-                <input type="text" class="form-control" name="descripcion" rows="4" required>
+            <!--formulario de ingreso de categorias-->
+            <form action='agregarPuesto' method='POST'>
+                <div class="mb-3">
+                    <label>Categoria</label>
+                    <input type="text" class="form-control" name="puesto" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Descripcion</label>
+                    <input type="text" class="form-control" name="descripcion"  required>
+                </div>
 
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Sueldo</label>
-                <input type="number" class="form-control" name="sueldo" required>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Sueldo</label>
+                    <input type="number" class="form-control" name="sueldo" required>
+                </div>
 
-            <div class="mb-3">
-                {if isset($smarty.session.logueado)}
+                <div class="mb-3">
                     <button type="submit" class="btn btn-secondary">Cargar datos</button>
-
-                {/if}
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
+    {/if}
     </div>
-</div>
 
 
 
-<h2>Detalle de las funciones de la empresa:</h2>
+    <h2>Detalle de las funciones de la empresa:</h2>
 
-{if $errorBorrar}
-    <div class="alert alert-danger mt-3">
-        {$errorBorrar}
-    </div>
-{/if}
+    {if $errorBorrar}
+        <div class="alert alert-danger mt-3">
+            {$errorBorrar}
+        </div>
+    {/if}
 
-<table class='table table-dark table-striped'>
-    <thead>
-        <tr>
-            <td> Puesto</td>
-            <td> Descripción </td>
-            <td> Sueldo</td>
-            <td> Editar</td>
-        </tr>
-    </thead>
-    </tr>
-
-    {foreach from=$categorias item= $categoria}
-        <tr>
-            <td>{$categoria->puesto}</td>
-            <td>{$categoria->descripcion}</td>
-            <td>{$categoria->sueldo}</td>
-            <td>
+    <table class='table table-dark table-striped'>
+        <thead>
+            <tr>
+                <td> Puesto</td>
+                <td> Descripción </td>
+                <td> Sueldo</td>
                 {if isset($smarty.session.logueado)}
-                    <a href='editarCategoria/{$categoria->id}' type="button" class="btn btn-primary">Editar</a>
-                    <a href='deletePuesto/{$categoria->id}' type="button" class="btn btn-primary">Borrar</a>
-                {/if}
-            </td>
+                <td> Editar</td>
+            {/if}
+            </tr>
+        </thead>
         </tr>
-    {/foreach}
 
-</table>
-{include file="footer.tpl"}
+        {foreach from=$categorias item= $categoria}
+            <tr>
+                <td>{$categoria->puesto}</td>
+                <td>{$categoria->descripcion}</td>
+                <td>{$categoria->sueldo}</td>
+                {if isset($smarty.session.logueado)}
+                <td>
+                        <a href='editarCategoria/{$categoria->id}' type="button" class="btn btn-primary">Editar</a>
+                        <a href='deletePuesto/{$categoria->id}' type="button" class="btn btn-primary">Borrar</a>
+                </td>
+            {/if}
+            </tr>
+        {/foreach}
+
+    </table>
+    {include file="footer.tpl"}

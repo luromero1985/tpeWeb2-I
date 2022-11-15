@@ -46,13 +46,11 @@
     </form>
 </div>
 
-
-<div>
-    {if isset($smarty.session.logueado)}
+{if isset($smarty.session.logueado)}
+    <div>
         <a href='mostrarFormularioEmpleado' type="button" class="btn btn-primary  mb-4">Agregar</a>
-    {/if}
-</div>
-
+    </div>
+{/if}
 
 <table class='table table-dark table-striped'>
     <thead>
@@ -63,7 +61,10 @@
             <td> Telefono </td>
             <td> Mail</td>
             <td> Puesto</td>
-            <td> Edición</td>
+            {if isset($smarty.session.logueado)}
+                <td> Detalle</td>
+                <td> Edición</td>
+            {/if}
         </tr>
     </thead>
     </tr>
@@ -76,14 +77,13 @@
             <td>{$empleado->celular}</td>
             <td>{$empleado->mail}</td>
             <td>{$empleado->puesto}</td>
-            <td>
-                {if isset($smarty.session.logueado)}
+            {if isset($smarty.session.logueado)}
+                <td><a href='verEmpleado/{$empleado->id}' type="button" class="btn btn-primary">Ver</a></td>
+                <td>
                     <a href='editarEmpleado/{$empleado->id}' type="button" class="btn btn-primary">Editar</a>
                     <a href='deleteEmpleado/{$empleado->id}' type="button" class="btn btn-primary">Borrar</a>
-
-                {/if}
-            </td>
-
+                </td>
+            {/if}
         </tr>
     {/foreach}
 

@@ -9,10 +9,10 @@ class EmpleadoController extends Controller
    }
 
    //genero la tabla que vincula la tabla principal con la secundaria
-   public function empleadoConPuesto()
+   public function getAll()
    {
       $this->autentificacionHelper->usoAutenticacion();
-      $empleados = $this->modeloEmpleado->empleadoConCategoria();
+      $empleados = $this->modeloEmpleado->getAll();
       $categorias = $this->modeloCategoria->getAllCategorias();
 
       if (!empty($empleados)) { //si hay empleados
@@ -27,7 +27,7 @@ class EmpleadoController extends Controller
    function mostrarFormulario()
    {
       $this->autentificacionHelper->chequeoLogueo();
-      $empleados = $this->modeloEmpleado->empleadoConCategoria();
+      $empleados = $this->modeloEmpleado->getAll();
       $categorias = $this->modeloCategoria->getAllCategorias();
       $this->vistaEmpleado->formularioCargaEmpleado($empleados, $categorias);
    }
@@ -35,7 +35,7 @@ class EmpleadoController extends Controller
    function agregarEmpleado()
    {
       $this->autentificacionHelper->chequeoLogueo();
-      $empleado = $this->modeloEmpleado->empleadoConCategoria();
+      $empleado = $this->modeloEmpleado->getAll();
       $categorias =  $this->modeloCategoria->getAllCategorias();
 
       //validar la entrada de mis datos
@@ -59,7 +59,7 @@ class EmpleadoController extends Controller
    function deleteEmpleado($id)
    {
       $this->autentificacionHelper->chequeoLogueo();
-      $this->modeloEmpleado->deleteEmpleadoById($id);
+      $this->modeloEmpleado->deleteEmpleado($id);
       header("Location:" . BASE_URL . 'empleados');
       die();
    }
@@ -69,7 +69,7 @@ class EmpleadoController extends Controller
    function traerDatosAlFormulario($id)
    {
       $this->autentificacionHelper->chequeoLogueo();
-      $empleado = $this->modeloEmpleado->getEmpleadoById($id);
+      $empleado = $this->modeloEmpleado->getEmpleado($id);
       $categorias = $this->modeloCategoria->getAllCategorias();
       $this->vistaEmpleado->mostrarEmpleadoEdicion($empleado, $categorias);
    }
@@ -93,6 +93,14 @@ class EmpleadoController extends Controller
       }
    }
 
+      //traemos un empleado de la tabla al tpl para mostrar
+      function traerDatos($id)
+      {
+         $this->autentificacionHelper->chequeoLogueo();
+         $empleado = $this->modeloEmpleado->getEmpleado($id);
+         $categorias = $this->modeloCategoria->getAllCategorias();
+         $this->vistaEmpleado->mostrarDetalleEmpleado($empleado, $categorias);
+      }
 
    //hago los filtros
 
@@ -113,7 +121,7 @@ class EmpleadoController extends Controller
       $this->autentificacionHelper->usoAutenticacion();
       if (!empty($_POST['nombreBuscado'])) {
          $nombreBuscado = $_POST['nombreBuscado'];
-         $empleados = $this->modeloEmpleado->getEmpleadoPorNombre($nombreBuscado);
+         $empleados = $this->modeloEmpleado->getEmpleadoByNombre($nombreBuscado);
          $categorias = $this->modeloCategoria->getAllCategorias();
 
          $this->vistaEmpleado->mostrarTablaEmpleadoConPuesto($empleados, $categorias);
@@ -126,7 +134,7 @@ class EmpleadoController extends Controller
       $this->autentificacionHelper->usoAutenticacion();
       if (!empty($_POST['puestoBuscado'])) {
          $puestoBuscado = $_POST['puestoBuscado'];
-         $empleados = $this->modeloEmpleado->getEmpleadoPorPuesto($puestoBuscado);
+         $empleados = $this->modeloEmpleado->getEmpleadoByPuesto($puestoBuscado);
          $categorias = $this->modeloCategoria->getAllCategorias();
 
          $this->vistaEmpleado->mostrarTablaEmpleadoConPuesto($empleados, $categorias);

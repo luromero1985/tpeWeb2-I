@@ -15,7 +15,7 @@
 
 
     <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Ingresar</button>
+        <button type="submit" class="btn btn-secondary">Ingresar</button>
     </div>
     {if $error}
         <div class="alert alert-danger mt-3">

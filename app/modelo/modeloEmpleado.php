@@ -28,9 +28,12 @@ class ModeloEmpleado
     }
 
     //vinculo las dos tablas
-    public function empleadoConCategoria()
+    public function getAll()   //era empleadosConCategoria
     {
-        $query = $this->db->prepare("SELECT empleado.id, empleado.nombre, empleado.dni, empleado.celular, empleado.mail, categoria.puesto as puesto FROM empleado JOIN categoria ON empleado.id_categoria_fk = categoria.id");
+        $query = $this->db->prepare("SELECT empleado.id, empleado.nombre, empleado.dni, empleado.celular, empleado.mail, categoria.puesto as puesto 
+                                    FROM empleado 
+                                    JOIN categoria ON empleado.id_categoria_fk = categoria.id
+                                    ");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
@@ -49,7 +52,7 @@ class ModeloEmpleado
     }
 
     //eliminamos un empleado dado su id
-    function deleteEmpleadoById($id)
+    function deleteEmpleado($id)
     {
         $query = $this->db->prepare('DELETE FROM empleado WHERE id=?');
         try {
@@ -63,7 +66,7 @@ class ModeloEmpleado
     //editamos un empleado
 
     //1-busco al empleado por su id
-    function getEmpleadoById($id)
+    function getEmpleado($id)
     {
         $query = $this->db->prepare('SELECT* FROM empleado WHERE id=?');
         try {
@@ -110,7 +113,7 @@ class ModeloEmpleado
 
 
     // traigo un empleado de la tabla por nombre
-    public function getEmpleadoPorNombre($nombreBuscado)
+    public function getEmpleadoByNombre($nombreBuscado)
     {
         //la base de datos ya está abierta por el constructor de la clase
         //ejecutamos la sentencia
@@ -124,7 +127,7 @@ class ModeloEmpleado
 
 
     // traigo un empleado de la tabla por categoria 
-    public function getEmpleadoPorPuesto($puestobuscado)
+    public function getEmpleadoByPuesto($puestobuscado)
     {
         //la base de datos ya está abierta por el constructor de la clase
         //ejecutamos la sentencia

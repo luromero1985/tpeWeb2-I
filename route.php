@@ -46,7 +46,7 @@ switch ($params[0]) {
     case 'empleados':
         // instancio controller
         $empleadoController = new EmpleadoController();
-        $empleadoController->empleadoConPuesto();
+        $empleadoController->getAll();
         break;
         //traigo la lista de todos los puestos de trabajo
     case 'puestos':
@@ -140,7 +140,12 @@ switch ($params[0]) {
         $categoriaController = new CategoriaController();
         $categoriaController->filtrarSueldo();
         break;
-
+    case 'verEmpleado':
+            // instancio el empleado_controller
+            $empleadoController = new EmpleadoController();
+            $id = $params[1];
+            $empleadoController->traerDatos($id);
+            break;
 
     default:
         echo ('404 Page not found');
